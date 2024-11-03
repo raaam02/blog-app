@@ -1,27 +1,35 @@
+import axios from "axios";
+
 const API_URL = "http://localhost:5001/api/posts";
 
 export const fetchPosts = async () => {
-  const response = await fetch(API_URL);
-  return response.json();
+  try {
+    const response = await axios.get(API_URL);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    throw error;
+  }
 };
 
 export const fetchPostById = async (id) => {
-  const response = await fetch(`${API_URL}/${id}`);
-  return response.json();
+  try {
+    const response = await axios.get(`${API_URL}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching post by ID:", error);
+    throw error;
+  }
 };
 
 export const createPost = async (formData) => {
   try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      body: formData,
+    const response = await axios.post(API_URL, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
-
-    if (!response.ok) {
-      throw new Error(`Server error: ${response.status}`);
-    }
-
-    return await response.json();
+    return response.data;
   } catch (error) {
     console.error("Error in createPost:", error);
     throw error;
@@ -29,17 +37,22 @@ export const createPost = async (formData) => {
 };
 
 export const deletePost = async (id) => {
-  await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+  try {
+    await axios.delete(`${API_URL}/${id}`);
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    throw error;
+  }
 };
 
 export const updatePost = async (id, formData) => {
   try {
-    const response = await fetch(`http://localhost:5001/api/posts/${id}`, {
-      method: "PUT",
-      body: formData,
+    const response = await axios.put(`${API_URL}/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
-    if (!response.ok) throw new Error("Failed to update post");
-    return await response.json();
+    return response.data;
   } catch (error) {
     console.error("Error in updatePost:", error);
     throw error;
