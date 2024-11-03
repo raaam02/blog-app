@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-const { createPost, getPosts, getPostById, deletePost } = require("../controllers/postController");
+const { createPost, getPosts, getPostById, deletePost, updatePost } = require("../controllers/postController");
 
 const router = express.Router();
 
@@ -20,5 +20,6 @@ router.post("/", upload.single("image"), createPost);
 router.get("/", getPosts);
 router.get("/:id", getPostById);
 router.delete("/:id", deletePost);
+router.put("/:id", upload.single("image"), updatePost);
 
 module.exports = router;

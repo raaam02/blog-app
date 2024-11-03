@@ -4,19 +4,16 @@ exports.createPost = async (req, res) => {
   try {
     const { title, content } = req.body;
 
-    // Ensure that the image file exists
     if (!req.file) {
       return res.status(400).json({ error: "Image upload failed" });
     }
 
-    // Create a new post instance
     const post = new Post({
       title,
       content,
-      image: req.file.path, // Save the image path
+      image: req.file.path,
     });
 
-    // Save the post to the database
     await post.save();
     res.status(201).json(post);
   } catch (error) {
@@ -57,3 +54,25 @@ exports.deletePost = async (req, res) => {
     res.status(500).json({ error: "Failed to delete post" });
   }
 };
+
+exports.updatePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+    const updateData = {
+      title,
+      content,
+    };
+
+    if (req.file) {
+      updateData.image = req.file.path;
+    }
+
+    const post = await Post.findByIdAndUpdate(id, updateData, { new: true });
+    if (!post) return res.status(404).json({ error: "Post not found" });
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
