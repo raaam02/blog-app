@@ -10,13 +10,22 @@ export const fetchPostById = async (id) => {
   return response.json();
 };
 
-export const createPost = async (postData) => {
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(postData),
-  });
-  return response.json();
+export const createPost = async (formData) => {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error in createPost:", error);
+    throw error;
+  }
 };
 
 export const deletePost = async (id) => {

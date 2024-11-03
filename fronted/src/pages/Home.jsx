@@ -10,15 +10,26 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen p-8">
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Blog Posts</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map(post => (
-          <div key={post._id} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+          <div key={post._id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <Link to={`/posts/${post._id}`}>
-              <h2 className="text-xl font-semibold text-blue-600 hover:text-blue-800 transition-colors duration-200">{post.title}</h2>
-              <p className="mt-4 text-gray-600">{post.content.slice(0, 100)}...</p>
+              {post.image && (
+                  <img
+                    src={`http://localhost:5001/${post.image}`}
+                    alt={post.title}
+                    className="w-full h-48 object-cover rounded-t-md mb-4"
+                  />
+                )}
+                <div className="p-3 pt-0">
+                  <h2 className="text-xl font-semibold text-blue-600 hover:text-blue-800 transition-colors duration-200">{post.title}</h2>
+                  <p className="mt-4 text-gray-600">
+                    {post.content.slice(0, 100)}...<span className="text-blue-700 hover:text-blue-900">read more</span>
+                  </p>
+                </div>
             </Link>
           </div>
         ))}
