@@ -25,7 +25,7 @@ const CreatePost = () => {
     <div className="flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl"
+        className="bg-white p-3 md:p-8 rounded-lg shadow-md w-full max-w-4xl"
       >
         <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">
           Create a New Post
@@ -44,8 +44,7 @@ const CreatePost = () => {
           value={content}
           onChange={setContent}
           placeholder="Write your content here..."
-          className="mb-4"
-          style={{ height: "200px" }}
+          className="mb-40 md:mb-20 h-48"
           modules={{
             toolbar: [
               [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],

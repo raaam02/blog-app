@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchPostById, updatePost } from "../api/postApi"; // Assume updatePost is defined in your API
+import { fetchPostById, updatePost } from "../api/postApi";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const EditPost = () => {
   const { id } = useParams();
@@ -43,7 +45,7 @@ const EditPost = () => {
   };
 
   return (
-    <div className="min-h-screen p-8">
+    <div className="min-h-screen md:p-8">
       <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">Edit Post</h1>
         <form onSubmit={handleUpdate}>
@@ -54,13 +56,13 @@ const EditPost = () => {
             onChange={(e) => setTitle(e.target.value)}
             className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-700"
           />
-          
+
           <label className="block mb-2 text-sm font-medium text-gray-700">Content</label>
-          <textarea
+          <ReactQuill
             value={content}
-            onChange={(e) => setContent(e.target.value)}
-            className="w-full p-3 mb-4 h-40 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-700"
-            rows="5"
+            onChange={setContent}
+            className="w-full mb-24  md:mb-12 h-60"
+            theme="snow"
           />
 
           <label className="block mb-2 text-sm font-medium text-gray-700">Image</label>
