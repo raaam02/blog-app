@@ -1,8 +1,10 @@
 const Post = require("../models/Post");
+const sanitizeHtml = require("sanitize-html");
 
 exports.createPost = async (req, res) => {
   try {
     const { title, content } = req.body;
+    const sanitizedContent = sanitizeHtml(content); 
 
     if (!req.file) {
       return res.status(400).json({ error: "Image upload failed" });
@@ -10,7 +12,7 @@ exports.createPost = async (req, res) => {
 
     const post = new Post({
       title,
-      content,
+      content: sanitizedContent,
       image: req.file.path,
     });
 

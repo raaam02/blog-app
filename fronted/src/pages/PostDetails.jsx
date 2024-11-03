@@ -44,8 +44,10 @@ const PostDetails = () => {
             className="w-full max-h-96 object-cover rounded-md mb-4"
           />
         )}
-        <p className="text-gray-600 mb-6">{post.content}</p>
-
+        <div
+        className="text-gray-600 mb-6"
+        dangerouslySetInnerHTML={{ __html: post.content }}
+        />
         <div className="flex justify-between items-center mt-8">
           <Link to="/" 
           className="flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200">

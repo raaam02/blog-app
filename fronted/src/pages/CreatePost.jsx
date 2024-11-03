@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { createPost } from "../api/postApi";
 import { useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -20,10 +22,10 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg"
+        className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl"
       >
         <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">
           Create a New Post
@@ -37,11 +39,29 @@ const CreatePost = () => {
           className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-700"
         />
 
-        <textarea
-          placeholder="Content"
+        <ReactQuill
+          theme="snow"
           value={content}
-          onChange={(e) => setContent(e.target.value)}
-          className="w-full p-3 mb-4 h-40 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-700"
+          onChange={setContent}
+          placeholder="Write your content here..."
+          className="mb-4"
+          style={{ height: "200px" }}
+          modules={{
+            toolbar: [
+              [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+              [{ 'size': [] }],
+              ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+              [{ 'color': [] }, { 'background': [] }],
+              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+              [{ 'align': [] }],
+              ['link', 'image'],
+              ['clean'] 
+            ],
+          }}
+          formats={[
+            'header', 'font', 'size', 'bold', 'italic', 'underline', 'strike',
+            'blockquote', 'list', 'bullet', 'align', 'link', 'color', 'background'
+          ]}
         />
 
         <input
