@@ -35,17 +35,17 @@ const PostDetails = () => {
 
   return (
     <div className="min-h-screen md:p-8">
-      <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">{post.title}</h1>
+      <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-50 mb-4">{post.title}</h1>
         {post.image && (
           <img
             src={`http://localhost:5001/${post.image}`}
             alt={post.title}
-            className="w-full max-h-96 object-cover rounded-md mb-4"
+            className="w-full max-h-96 object-cover dark:border rounded-md mb-4"
           />
         )}
         <div
-        className="text-gray-600 mb-6"
+        className="text-gray-600 dark:text-gray-100 mb-6"
         dangerouslySetInnerHTML={{ __html: post.content }}
         />
         <div className="flex justify-between items-center mt-8">
