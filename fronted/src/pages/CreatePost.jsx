@@ -25,9 +25,9 @@ const CreatePost = () => {
     <div className="flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-3 md:p-8 rounded-lg shadow-md w-full max-w-4xl"
+        className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-3 md:p-8 rounded-lg shadow-md w-full max-w-4xl"
       >
-        <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">
+        <h2 className="text-2xl font-semibold mb-6 text-center">
           Create a New Post
         </h2>
 
@@ -36,7 +36,7 @@ const CreatePost = () => {
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-700"
+          className="w-full p-3 mb-4 border border-gray-300 dark:bg-gray-800 rounded focus:outline-none focus:ring-1 focus:ring-blue-700"
         />
 
         <ReactQuill

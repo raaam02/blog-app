@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { fetchPostById, deletePost } from "../api/postApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faHome, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import Button from "../components/Button";
 
 
 const PostDetails = () => {
@@ -54,19 +55,15 @@ const PostDetails = () => {
             <FontAwesomeIcon icon={faHome} className="mr-2" /> Home
           </Link>
           <div className="flex items-center gap-4">
-            <Link
-                to={`/edit/${id}`}
-                className="px-3 sm:px-4 py-1 sm:py-2 rounded-full bg-gradient-to-b from-yellow-500 to-yellow-600 text-white focus:outline-none focus:ring-1 focus:ring-yellow-700 hover:from-yellow-600 hover:to-yellow-700 hover:shadow-xl transition duration-200"
-                >
-                Edit Post
+            <Link to={`/edit/${id}`}>
+              <Button title={<><FontAwesomeIcon icon={faPenToSquare} className="mr-2" /><span className="hidden sm:inline-block">Edit</span></>} color={'yellow'} />
             </Link>
-            <button
+            <Button
+              title={<><FontAwesomeIcon icon={faTrash} className="mr-2" /><span className="hidden sm:inline-block">Delete</span></>}
+              color={'red'}
               onClick={handleDelete}
-              className="px-8 sm:px-4 py-2 sm:py-2 rounded-full flex justify-center items-center bg-gradient-to-b from-red-500 to-red-600 text-white focus:outline-none focus:ring-1 focus:ring-red-700 hover:from-red-600 hover:to-red-800 hover:shadow-xl transition duration-200"
             >
-              <FontAwesomeIcon icon={faTrash} className="mr-2" />
-              <span className="hidden sm:inline-block">Delete</span>
-            </button>
+            </Button>
           </div>
         </div>
       </div>
