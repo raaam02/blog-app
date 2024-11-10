@@ -1,21 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createPost } from "../api/postApi";
 import { useNavigate } from "react-router-dom";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import EditorJS from "@editorjs/editorjs";
+import Tools from "../components/Tools.editor";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
+  const editorInstance = useRef(null);
+
+  useEffect(() => {
+    let editor = new EditorJS({
+      holder: "editorjs",
+      data: '',
+      placeholder: "Write your content here...",
+      tools: Tools
+    });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("content", content);
     if (image) formData.append("image", image);
+
+    const content = await editorInstance.current.save();
+    formData.append("content", JSON.stringify(content));
 
     await createPost(formData);
     navigate("/");
@@ -25,7 +38,7 @@ const CreatePost = () => {
     <div className="flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-3 md:p-8 rounded-lg shadow-md w-full max-w-4xl"
+        className="bg-white font-serif dark:bg-gray-900 text-gray-700 dark:text-gray-100 p-3 md:p-8 rounded-lg shadow-md w-full max-w-4xl"
       >
         <h2 className="text-2xl font-semibold mb-6 text-center">
           Create a New Post
@@ -36,32 +49,10 @@ const CreatePost = () => {
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full p-3 mb-4 border border-gray-300 dark:bg-gray-800 rounded focus:outline-none focus:ring-1 focus:ring-blue-700"
+          className="w-full p-3 mb-4 text-2xl font-bold dark:bg-gray-800 rounded focus:outline-none"
         />
 
-        <ReactQuill
-          theme="snow"
-          value={content}
-          onChange={setContent}
-          placeholder="Write your content here..."
-          className="mb-40 md:mb-20 h-48"
-          modules={{
-            toolbar: [
-              [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-              [{ 'size': [] }],
-              ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-              [{ 'color': [] }, { 'background': [] }],
-              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-              [{ 'align': [] }],
-              ['link', 'image'],
-              ['clean'] 
-            ],
-          }}
-          formats={[
-            'header', 'font', 'size', 'bold', 'italic', 'underline', 'strike',
-            'blockquote', 'list', 'bullet', 'align', 'link', 'color', 'background'
-          ]}
-        />
+        <div id="editorjs" className="mb-6 text-gray-700 bg-white dark:bg-gray-800 rounded focus:outline-none"></div>
 
         <input
           type="file"
