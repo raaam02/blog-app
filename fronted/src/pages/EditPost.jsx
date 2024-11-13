@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { fetchPostById, updatePost } from "../api/postApi";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import Button from "../components/Button";
 
 const EditPost = () => {
   const { id } = useParams();
@@ -71,13 +72,13 @@ const EditPost = () => {
             onChange={handleImageChange}
             className="w-full mb-4 font-semibold p-2 text-white border border-green-500 rounded-2xl cursor-pointer bg-green-500 dark:text-gray-50 focus:outline-none focus:ring-1 focus:ring-green-800 dark:bg-green-500 dark:border-green-500 dark:placeholder-green-500 hover:bg-green-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-green-700 hover:file:bg-violet-100"
           />
-
-          <button
-            type="submit"
-            className="w-full px-8 py-2 rounded-full bg-gradient-to-b from-blue-500 to-blue-600 text-white focus:outline-none focus:ring-1 focus:ring-blue-700 hover:from-blue-600 hover:to-blue-800 hover:shadow-xl transition duration-200"
+        <div className="w-full text-center">
+          <Button
+            title="Update Post"
+            type={'submit'}
           >
-            Update Post
-          </button>
+          </Button>
+        </div>
         </form>
       </div>
     </div>
